@@ -1,11 +1,11 @@
-class Car {
+class post {
     constructor(obj) {
         obj && Object.assign(this, obj);
     }
 
     toString() {
-        return `Make: ${this.make}, Model: ${this.model}`;
+        return `Name: ${this.name}, Body: ${this.body}`;
     }
 }
 
-module.exports = Car;
+module.exports = post;

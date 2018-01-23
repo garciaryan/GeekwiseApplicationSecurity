@@ -1,24 +1,24 @@
-const Car = require('../models/car.model');
-const CarDb = require('../db/car.db');
+const Post = require('../models/post.model');
+const postDb = require('../db/post.db');
 const Common = require('./common');
 
-class CarController {
+class postController {
     constructor(router) {
-        router.route('/car/:id')
+        router.route('/post/:id')
             .get(this.getOne)
             .put(this.updateOne)
             .delete(this.deleteOne);
-        router.route('/car')
+        router.route('/post')
             .get(this.getAll)
             .post(this.insertOne);
     }
 
     async getOne(req, res, next) {
         try {
-            const data = await CarDb.getOne(req.params.id);
+            const data = await postDb.getOne(req.params.id);
             if (data) {
-                let car = new Car(data);
-                return Common.resultOk(res, car);
+                let post = new Post(data);
+                return Common.resultOk(res, post);
             } else {
                 return Common.resultNotFound(res);
             }
@@ -34,10 +34,10 @@ class CarController {
 
     async updateOne(req, res, next) {
         try {
-            const data = await CarDb.updateOne(req.params.id, req.body);
+            const data = await postDb.updateOne(req.params.id, req.body);
             if (data) {
-                let car = new Car(data);
-                return Common.resultOk(res, car);
+                let post = new Post(data);
+                return Common.resultOk(res, post);
             } else {
                 return Common.resultNotFound(res);
             }
@@ -53,10 +53,10 @@ class CarController {
 
     async insertOne(req, res, next) {
         try {
-            const data = await CarDb.insertOne(req.body);
+            const data = await postDb.insertOne(req.body);
             if (data) {
-                let car = new Car(data);
-                return Common.resultOk(res, car);
+                let post = new Post(data);
+                return Common.resultOk(res, post);
             } else {
                 return Common.resultNotFound(res);
             }
@@ -72,7 +72,7 @@ class CarController {
 
     async deleteOne(req, res, next) {
         try {
-            const data = await CarDb.deleteOne(req.params.id);
+            const data = await postDb.deleteOne(req.params.id);
             if (data) {
                 return Common.resultOk(res, data);
             } else {
@@ -90,10 +90,10 @@ class CarController {
 
     async getAll(req, res, next) {
         try {
-            const data = await CarDb.getAll();
+            const data = await postDb.getAll();
             if (data) {
-                let cars = data.map(car => { return new Car(car) });
-                return Common.resultOk(res, cars);
+                let posts = data.map(post => { return new Post(post); });
+                return Common.resultOk(res, posts);
             } else {
                 return Common.resultNotFound(res);
             }
@@ -103,4 +103,4 @@ class CarController {
     }
 }
 
-module.exports = CarController;
+module.exports = postController;

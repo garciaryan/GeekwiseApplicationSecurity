@@ -8,31 +8,31 @@
 	},
 	"item": [
 		{
-			"name": "/api/car/1",
+			"name": "/api/post/1",
 			"request": {
-				"url": "http://localhost:3000/api/car/1",
+				"url": "http://localhost:3000/api/post/1",
 				"method": "GET",
 				"header": [],
 				"body": {},
-				"description": "Get a single car"
+				"description": "Get a single post"
 			},
 			"response": []
 		},
 		{
-			"name": "/api/car/",
+			"name": "/api/post/",
 			"request": {
-				"url": "http://localhost:3000/api/car",
+				"url": "http://localhost:3000/api/post",
 				"method": "GET",
 				"header": [],
 				"body": {},
-				"description": "Get all cars"
+				"description": "Get all posts"
 			},
 			"response": []
 		},
 		{
-			"name": "/api/car/",
+			"name": "/api/post/",
 			"request": {
-				"url": "http://localhost:3000/api/car",
+				"url": "http://localhost:3000/api/post",
 				"method": "POST",
 				"header": [
 					{
@@ -58,14 +58,14 @@
 						}
 					]
 				},
-				"description": "Create a new car entry"
+				"description": "Create a new post entry"
 			},
 			"response": []
 		},
 		{
-			"name": "/api/car/1",
+			"name": "/api/post/1",
 			"request": {
-				"url": "http://localhost:3000/api/car/1",
+				"url": "http://localhost:3000/api/post/1",
 				"method": "PUT",
 				"header": [
 					{
@@ -85,18 +85,18 @@
 						}
 					]
 				},
-				"description": "Update a car entry"
+				"description": "Update a post entry"
 			},
 			"response": []
 		},
 		{
-			"name": "/api/car/1",
+			"name": "/api/post/1",
 			"request": {
-				"url": "http://localhost:3000/api/car/1",
+				"url": "http://localhost:3000/api/post/1",
 				"method": "DELETE",
 				"header": [],
 				"body": {},
-				"description": "Delete a car entry"
+				"description": "Delete a post entry"
 			},
 			"response": []
 		}

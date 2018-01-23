@@ -1,7 +1,7 @@
-const CarController = require('./car.controller');
+const PostController = require('./post.controller');
 const express = require('express');
 const router = express.Router();
 
-const carController = new CarController(router);
+const postController = new PostController(router);
 
 module.exports = router;

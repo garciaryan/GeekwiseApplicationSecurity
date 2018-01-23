@@ -18,22 +18,22 @@
             <div class="col">
                 <h1>Application Security - Basic Insecure Web Application</h1>
                 <br>
-                <form class="form-inline" id="add-car">
-                    <input type="hidden" id="carid">
-                    <label class="sr-only" for="make">Make</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="make" placeholder="Honda">
+                <form class="form-inline" id="add-post">
+                    <input type="hidden" id="postid">
+                    <label class="sr-only" for="name">name</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="name" placeholder="Name">
 
-                    <label class="sr-only" for="model">Model</label>
+                    <label class="sr-only" for="body">body</label>
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <input type="text" class="form-control" id="model" placeholder="Civic">
+                        <textarea type="text" class="form-control" id="body" placeholder="Write a post!"></textarea>
                     </div>
 
-                    <input type="submit" id="car-submit" class="btn btn-primary" value="Add Car">
+                    <input type="submit" id="post-submit" class="btn btn-primary" value="Add post">
                 </form>
                 <br>
-                <div class="car-container">
-                    <h3>Cars:</h3>
-                    <ul id="car-list"></ul>
+                <div class="post-container">
+                    <h3>posts:</h3>
+                    <ul id="post-list"></ul>
             </div>
             </div>
         </div>

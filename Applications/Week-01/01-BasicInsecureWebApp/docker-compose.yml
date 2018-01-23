@@ -3,7 +3,7 @@ version: "3.3"
 services:
   postgres:
     build: ./database
-    image: appsec-postgres:01-01
+    image: newblog
     env_file: ./server/.env
     networks:
       - backend
@@ -13,7 +13,7 @@ services:
     image: "node:8"
     env_file: ./server/.env
     working_dir: /home/node/server
-    depends_on: 
+    depends_on:
       - postgres
     networks:
       - backend
