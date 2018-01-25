@@ -1,11 +1,9 @@
 const Post = require('../models/post.model');
-const PostDb = require('../db/post.db');
+const postDb = require('../db/post.db');
 const Common = require('./common');
 
-class PostController {
+class postController {
     constructor(router) {
-        router.route('/post/search')
-            .post(this.search);
         router.route('/post/:id')
             .get(this.getOne)
             .put(this.updateOne)
@@ -17,7 +15,7 @@ class PostController {
 
     async getOne(req, res, next) {
         try {
-            const data = await PostDb.getOne(req.params.id);
+            const data = await postDb.getOne(req.params.id);
             if (data) {
                 let post = new Post(data);
                 return Common.resultOk(res, post);
@@ -29,14 +27,14 @@ class PostController {
             if (e.code == 0) {
                 return Common.resultNotFound(res);
             } else {
-                return Common.resultErr(res, e.message);
+                return Common.resultErr(res, e);
             }
         }
     }
 
     async updateOne(req, res, next) {
         try {
-            const data = await PostDb.updateOne(req.params.id, req.body);
+            const data = await postDb.updateOne(req.params.id, req.body);
             if (data) {
                 let post = new Post(data);
                 return Common.resultOk(res, post);
@@ -48,14 +46,14 @@ class PostController {
             if (e.code == 0) {
                 return Common.resultNotFound(res);
             } else {
-                return Common.resultErr(res, e.message);
+                return Common.resultErr(res, e);
             }
         }
     }
 
     async insertOne(req, res, next) {
         try {
-            const data = await PostDb.insertOne(req.body);
+            const data = await postDb.insertOne(req.body);
             if (data) {
                 let post = new Post(data);
                 return Common.resultOk(res, post);
@@ -64,17 +62,17 @@ class PostController {
             }
         } catch (e) {
             // handle error
-            if (e.code && e.code === 0) {
+            if (e.code == 0) {
                 return Common.resultNotFound(res);
             } else {
-                return Common.resultErr(res, e.message);
+                return Common.resultErr(res, e);
             }
         }
     }
 
     async deleteOne(req, res, next) {
         try {
-            const data = await PostDb.deleteOne(req.params.id);
+            const data = await postDb.deleteOne(req.params.id);
             if (data) {
                 return Common.resultOk(res, data);
             } else {
@@ -82,44 +80,27 @@ class PostController {
             }
         } catch (e) {
             // handle error
-            if (e.code && e.code === 0) {
+            if (e.code == 0) {
                 return Common.resultNotFound(res);
             } else {
-                return Common.resultErr(res, e.message);
+                return Common.resultErr(res, e);
             }
         }
     }
 
     async getAll(req, res, next) {
         try {
-          let order = req.query.order === '1';
-            const data = await PostDb.getAll(order);
+            const data = await postDb.getAll();
             if (data) {
-                let posts = data.map(p => { return new Post(p) });
+                let posts = data.map(post => { return new Post(post); });
                 return Common.resultOk(res, posts);
             } else {
                 return Common.resultNotFound(res);
             }
         } catch (e) {
-            return Common.resultErr(res, e.message);
-        }
-    }
-
-    async search(req, res, next) {
-        try {
-          let order = req.body.order === '1';
-            const data = await PostDb.search(req.body.search, order);
-            if (data) {
-                let posts = data.map(p => { return new Post(p) });
-                return Common.resultOk(res, posts);
-            } else {
-                return Common.resultOk([]);
-            }
-        } catch (e) {
-            console.log('catch', e)
-            return Common.resultErr(res, e.message);
+            return Common.resultErr(res, e);
         }
     }
 }
 
-module.exports = PostController;
+module.exports = postController;

@@ -33,12 +33,13 @@ function searchPosts(e) {
     e.preventDefault();
 
     let list = document.getElementById("post-list");
+    let order = document.querySelector('#post-search-order');
     list.innerHTML = "";
     let searchVal = $('#search').val();
     console.log(searchVal)
     clearEdit();
 
-    jQuery.post(`${_baseUrl}:${_port}/api/post/search`, { search: searchVal }, function(data) {
+    jQuery.post(`${_baseUrl}:${_port}/api/post/search`, { search: searchVal, order: order }, function(data) {
         generatePosts(data);
     });
 }
@@ -132,7 +133,7 @@ function clearEdit() {
 }
 
 
-// run getPosts on 
+// run getPosts on
 $(function() {
     // server is running from same IP as front-end so get the hostname
     _baseUrl = `http://${window.location.hostname}`;
