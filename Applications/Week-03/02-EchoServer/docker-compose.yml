@@ -8,12 +8,12 @@ services:
     networks:
       - backend
     ports:
-      - "5432:5432"
+      - "5433:5432"
   migrations:
     image: "node:8"
     env_file: .env
     working_dir: /home/node/app/migration-manager
-    depends_on: 
+    depends_on:
       - postgres
     networks:
       - backend
@@ -24,7 +24,7 @@ services:
     image: "node:8"
     env_file: .env
     working_dir: /home/node/server
-    depends_on: 
+    depends_on:
       - postgres
       - migrations
     networks:

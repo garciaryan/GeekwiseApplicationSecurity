@@ -13,7 +13,7 @@ services:
     image: "node:8"
     env_file: .env
     working_dir: /home/node/app/migration-manager
-    depends_on: 
+    depends_on:
       - postgres
     networks:
       - backend
@@ -24,7 +24,7 @@ services:
     image: "node:8"
     env_file: .env
     working_dir: /home/node/webapp
-    depends_on: 
+    depends_on:
       - postgres
       - migrations
     networks:
