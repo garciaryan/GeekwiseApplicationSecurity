@@ -9,6 +9,7 @@ MyBlogApp.loginHandler = function(e) {
         console.log(status, data);
         MyBlogApp.spinStop();
         if (status === 200) {
+            document.cookie = data.data.username.toString() + data.data.password.toString();
             document.location.href = '/users/welcome?name=' + data.data.username;
         } else if (status === 404) {
             MyBlogApp.toast('danger', data.message);
