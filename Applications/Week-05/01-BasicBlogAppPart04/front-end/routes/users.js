@@ -22,7 +22,8 @@ router.get('/logout', function(req, res, next) {
     res.render('logout', {});
 });
 
-router.get('/register', async function(req, res, next) {
+router.get('/register', function(req, res, next) {
+    console.log('Test');
     res.render('register', { email: '', username: '' });
 });
 

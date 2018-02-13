@@ -4,6 +4,7 @@ block content
   div(class='row justify-content-center align-items-center')
     div(id='post-container' class='col-sm-8 border border-primary rounded py-3 bg-light')
       form(id='post-form' action='/post' method='post')
+      input(type='hidden' name='_csrf' value='#{csrfToken}')
         h1 #{mode}
         div(class='form-group')
           label(for='inputTitle' class='col-form-label') Title
