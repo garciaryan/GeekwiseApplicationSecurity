@@ -43,12 +43,12 @@ function authenticate(user, pass, req, res){
 	//connect to MongoDB - auth not enabled 
 	//also, http interface enabled at http://localhost:28017/
 	//can bypass with query selector injection (i.e., user=admin&pass[$gt]=)
-	mongo.connect('mongodb://localhost:27017/users', function(err, db){
+	mongo.connect('mongodb://mongodb:27017/users', function(err, db){
 		if(err){ 
 			console.log('MongoDB connection error...');
 			return err;
 		}
-		db.collection('collection').findOne({username: user, password: pass, isActive: true},function(err, result){
+		db.collection('collection').findOne({username: String(user), password: String(pass), isActive: true},function(err, result){
 			if(err){
 				console.log('Query error...');
 				return err;
@@ -67,7 +67,7 @@ function authenticate(user, pass, req, res){
 var queryMongo = function(res, database, collectionName, field, value){
 	//connect to MongoDB - auth not enabled 
 	//also, http interface enabled at http://localhost:28017/
-	mongo.connect('mongodb://localhost:27017/'+database, function(err, db){
+	mongo.connect('mongodb://mongodb:27017/'+database, function(err, db){
 		if(err){ 
 			console.log('MongoDB connection error...');
 			return err;
@@ -166,7 +166,7 @@ app.use(function (err, req, res, next) {
 app.get('/secure/removeInvoice', function(req, res){
 	//connect to MongoDB - auth not enabled 
 	//also, http interface enabled at http://localhost:28017/
-	mongo.connect('mongodb://localhost:27017/billing', function(err, db){
+	mongo.connect('mongodb://mongodb:27017/billing', function(err, db){
 		if(err){ 
 			console.log(err);
 			res.status(500).send('Could not connect to database...');
@@ -191,12 +191,25 @@ app.get('/secure/removeInvoice', function(req, res){
 
 //add invoice
 app.post('/secure/addInvoice', function(req, res){
-	//build invoice	- inputs are not validated and invoice object is open to parameter pollution
-	var invoice = req.body;
-
+  //build invoice	- inputs are not validated and invoice object is open to parameter pollution
+  let invoice = {
+    fName: null,
+    id: null,
+    lName: null,
+    item: null,
+    paid: null,
+    price: null,
+    quantity: null
+  };
+  var data = req.body;
+  for ( let key in invoice ){
+    if (invoice.hasOwnProperty(key) && typeof invoice[key] === 'string'){
+      invoice[key] = data[key];
+    }
+  }
 	//connect to MongoDB - auth not enabled 
-	//also, http interface enabled at http://localhost:28017/
-	mongo.connect('mongodb://localhost:27017/billing', function(err, db){
+	//also, http interface enabled at http://mongodb:28017/
+	mongo.connect('mongodb://mongodb:27017/billing', function(err, db){
 		if(err){ 
 			console.log(err);
 			res.status(500).send('Could not add invoice...');

@@ -1,6 +1,7 @@
 const Post = require( '../models/post.model' );
 const PostDb = require( '../db/post.db' );
 const Common = require( './common' );
+const RolesDb = require('../db/roles.db');
 
 class PostController {
   constructor( router ) {
@@ -11,6 +12,7 @@ class PostController {
       .put( this.updateOne )
       .delete( this.deleteOne );
     router.route( '/post' )
+      .get( this.checkRole )
       .get( this.getAll )
       .post( this.insertOne );
   }
@@ -87,6 +89,19 @@ class PostController {
       } else {
         return Common.resultErr( res, e.message );
       }
+    }
+  }
+
+  async checkRole( req, res, next ){
+    try {
+      const data = await RolesDb.checkRole(req.params.id);
+      if (data){
+        
+      }
+      next();
+    }
+    catch (e) {
+      return Common.resultErr(res, e.message);
     }
   }
 
