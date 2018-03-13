@@ -10,7 +10,8 @@ const DEFAULT = {
   data1: 'Hello World',
   data2: 'ABC 123',
   data3: 'Security is key.',
-  data4: 'Protect your data!'
+  data4: 'Protect your data!',
+  data5: 'Hey!'
 };
 
 /* GET home page. */
@@ -37,6 +38,7 @@ router.post( '/', async function( req, res, next ) {
     data.data2 = encryptAesCtr( data.data2 );
     data.data3 = encryptAesGcm( '1', data.data3 );
     data.data4 = encryptAesGcm( '2', data.data4 );
+    data.data5 = encryptRC4(data.data5);
     const resp = await db.upsert( data );
     if ( resp ) {
       console.log( resp );
@@ -57,12 +59,37 @@ function getDecodedData( data ) {
   data.data2Encrypted = data.data2;
   data.data3Encrypted = data.data3;
   data.data4Encrypted = data.data4;
+  data.data5Encrypted = data.data5;
   // decode data
   data.data1 = decryptAesCtr( data.data1 );
   data.data2 = decryptAesCtr( data.data2 );
   data.data3 = decryptAesGcm( '1', data.data3 );
   data.data4 = decryptAesGcm( '2', data.data4 );
+  data.data5 = decryptRC4(data.data5);
   return Object.assign( { title: TITLE }, data );
+}
+
+function encryptRC4( data ) {
+  const iv = Buffer.from( data.substring( 0, 32 ), 'hex' );
+  const cipher = crypto.createCipheriv('rc4', ENCRYPTKEY, iv);
+  var crypted = cipher.update(data, 'utf8', 'hex');
+  crypted += cipher.final('hex');
+  crypted = iv.toString( 'hex' ) + crypted;
+  return crypted;
+}
+
+function decryptRC4(data){
+  try {
+    const iv = Buffer.from( data.substring( 0, 32 ), 'hex' );
+    const decipher = crypto.createDecipheriv( 'rc4', ENCRYPTKEY, iv );
+    var dec = decipher.update( data.substring( 32 ), 'hex', 'utf8' );
+    dec += decipher.final( 'utf8' );
+    return dec;
+  }
+  catch (e) {
+    console.log(e);
+    return '';
+  }
 }
 
 function encryptAesCtr( data ) {
